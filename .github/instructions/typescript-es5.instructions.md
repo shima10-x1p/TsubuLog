@@ -1,11 +1,11 @@
 ---
-description: 'Guidelines for TypeScript Development targeting TypeScript 5.x and ES2022 output'
+description: 'Guidelines for TypeScript Development targeting TypeScript 5.x and ES5 output'
 applyTo: '**/*.ts'
 ---
 
 # TypeScript Development
 
-> These instructions assume projects are built with TypeScript 5.x (or newer) compiling to an ES2022 JavaScript baseline. Adjust guidance if your runtime requires older language targets or down-level transpilation.
+> These instructions assume projects are built with TypeScript 5.x (or newer) compiling to an ES5 JavaScript baseline. Follow the repository’s build/bundling and polyfill strategy for runtime compatibility.
 
 ## Core Intent
 
@@ -16,8 +16,8 @@ applyTo: '**/*.ts'
 
 ## General Guardrails
 
-- Target TypeScript 5.x / ES2022 and prefer native features over polyfills.
-- Use pure ES modules; never emit `require`, `module.exports`, or CommonJS helpers.
+- Target TypeScript 5.x / ES5. Follow the repo’s runtime support matrix (including any required polyfills).
+- Prefer ES modules in source. The emitted module format (ESM/CJS/etc.) must follow the repository’s build configuration and target runtime
 - Rely on the project's build, lint, and test scripts unless asked otherwise.
 - Note design trade-offs when intent is not obvious.
 
@@ -50,7 +50,7 @@ applyTo: '**/*.ts'
 
 ## Async, Events & Error Handling
 
-- Use `async/await`; wrap awaits in try/catch with structured errors.
+- Use `async/await` when the runtime provides Promise (or the repo supplies a polyfill). Wrap awaits in try/catch with structured errors.
 - Guard edge cases early to avoid deep nesting.
 - Send errors through the project's logging/telemetry utilities.
 - Surface user-facing errors via the repository's notification pattern.
